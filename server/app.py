@@ -98,7 +98,7 @@ class CheckSession(Resource):
         user = User.query.filter_by(id=session.get("user_id")).first()
 
         if not user:
-            return make_response(jsonify({"message": "401: Not Authorized"}), 401)
+            return {}, 401
         else:
             return make_response(jsonify(user.to_dict()), 200)
 
@@ -112,8 +112,7 @@ class Logout(Resource):
     def delete(self):
         session["user_id"] = None
 
-
-        return make_response(jsonify({"message":"Logged out"}), 204)
+        return {}, 204
 
 
 api.add_resource(Logout, "/logout")
